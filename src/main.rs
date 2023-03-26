@@ -3,8 +3,10 @@ use actix_web::{get, web, App, HttpResponse, HttpServer, Responder, Result};
 use env_logger::Env;
 mod post;
 mod prisma;
+mod user;
 use prisma::PrismaClient;
 use prisma_client_rust::NewClientError;
+
 
 #[get("/")]
 async fn hello() -> impl Responder {
@@ -23,6 +25,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(Logger::new("a% %{User-Agent}i %s"))
             .app_data(prisma_service.clone())
             .configure(post::post::configure)
+            .configure(user::user::configure)
             .service(hello)
     })
     .bind(("127.0.0.1", 4000))?

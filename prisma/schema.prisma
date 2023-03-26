@@ -17,3 +17,9 @@ model Post {
   author String
   views  Int
 }
+
+model User {
+  id         Int   @id @default(autoincrement())
+  email      String
+  password   String
+}
